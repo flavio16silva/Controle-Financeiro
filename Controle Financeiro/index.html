@@ -9,47 +9,47 @@
 <body>
   <h2>Controle Financeiro</h2>
 
-  <div class="container">
-    <h4>Saldo Atual</h4>
+  <main class="container">
+      <h4>Saldo Atual</h4>
 
-    <h1 id="balanco" class="balanco">R$ 0.00</h1>
+      <h1 id="balanco" class="balanco">R$ 0.00</h1>
 
-    <div class="containerdois">
-      <div>
-        <h4>Receitas</h4>
-        <p id="dinheiro-plus" class="dinheiro-plus">+ R$0.00</p>
-      </div>
+      <section class="containerdois">
+            <article>
+                <h4>Receitas</h4>
+                <p id="dinheiro-plus" class="dinheiro-plus">+ R$0.00</p>
+            </article>
 
-      <div>
-        <h4>Despesas</h4>
-        <p id="dinheiro-menos" class="dinheiro-menos">- R$0.00</p>
-      </div>
-    </div>
+            <article>
+                <h4>Despesas</h4>
+                <p id="dinheiro-menos" class="dinheiro-menos">- R$0.00</p>
+            </article>
+      </section>
 
     <h3>Transações</h3>
 
-    <ul id="transacoes" class="transacoes">
+      <ul id="transacoes" class="transacoes">
 
-    </ul>
+      </ul>
 
     <h3>Adicionar Transação</h3>
 
-    <form id="form">
-      <div class="form-controle">
-        <label for="text">Nome</label>
-        <input autofocus type="text" id="text" placeholder="Nome da Transação"/>
-      </div>
+        <form id="form">
+              <article class="form-controle">
+                  <label for="text">Nome</label>
+                  <input autofocus type="text" id="text" placeholder="Nome da Transação"/>
+              </article>
 
-      <div class="form-controle">
-        <label for="quantia">Valor <br/>
-        <small>(negativo - despesas, positivo - receitas)</small>
-        </label>
-        <input type="number" id="quantia" placeholder="Valor da Transação"/>
-      </div>
+              <article class="form-controle">
+                  <label for="quantia">Valor <br/>
+                  <small>(negativo - despesas, positivo - receitas)</small>
+                  </label>
+                  <input type="number" id="quantia" placeholder="Valor da Transação"/>
+              </article>
 
-      <button class="btn">Adicionar</button>
-      
-    </form>
-  </div>
+              <button class="btn">Adicionar</button>
+          
+        </form>
+  </main>
 </body>
 </html>
