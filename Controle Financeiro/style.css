@@ -19,7 +19,7 @@ body {
   min-height: 100vh;
   margin: 0;
   font-family: 'Lato', sans-serif;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* Main: Container Principal */
@@ -51,17 +51,17 @@ h3 {
 
 /* Saldo Atual */
 h4 {
-  margin-top: 5px;
+  margin-top: 0;
   text-transform: uppercase;
 }
 
 .containerdois {
   background-color: #fff;
   box-shadow: var(--box-shadow);
-  padding: 1em;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
-  margin: 1em 0;
+  margin: 20px 0;
 }
 
 .containerdois > article {
@@ -70,7 +70,7 @@ h4 {
 }
 
 .containerdois > article:first-of-type {
-  border-right: 2px solid #dedede;
+  border-right: 1px solid #dedede;
 }
 
 .dinheiro {
@@ -79,11 +79,11 @@ h4 {
   margin: 5px 0;
 }
 
-.dinheiro.plus {
+.dinheiro-plus {
   color: #2ecc71;
 }
 
-.dinheiro.menos {
+.dinheiro-menos {
   color: #c0392b;
 }
 
@@ -105,7 +105,7 @@ input[type='number'] {
 }
 
 /* Botão Adicionar */
-.btn{
+.btn {
   cursor: pointer;
   background-color: #9c88ff;
   box-shadow: var(--box-shadow);
@@ -118,7 +118,8 @@ input[type='number'] {
   width: 100%;
 }
 
-.btn:focus, .delete-btn:focus { 
+.btn:focus, 
+.delete-btn:focus { 
     outline: 0;
 }
 
@@ -139,11 +140,12 @@ input[type='number'] {
   margin: 10px 0;
 }
 
-.transacao li.plus {
+.transacoes li.plus {
   border-right: 5px solid #2ecc71;
+ 
 }
 
-.transacao li.menos {
+.transacoes li.menos {
   border-right: 5px solid #c0392b;
 }
 
@@ -156,13 +158,13 @@ input[type='number'] {
   line-height: 20px;
   padding: 2px 5px;
   position: absolute;
-  top:50%;
+  top: 50%;
   left: 0;
   transform: translate(-100%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.transacao li:hover .delet-btn {
+.transacoes li:hover .delet-btn {
   opacity: 1;
 }
