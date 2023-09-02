@@ -35,39 +35,38 @@ const removeTransacao = ID => {
   
 }
 
-const addTransacoesNoDom = transacao => {
-  const operacao = transacao.quantia < 0 ? '-' : '+'
-  const CSSClass = transacao.quantia < 0 ? 'menos' : 'plus'
-  const valorSemOperacao = Math.abs(transacao.quantia)
+const addTransacoesNoDom = ({quantia, name, id}) => {
+  const operacao = quantia < 0 ? '-' : '+'
+  const CSSClass = quantia < 0 ? 'menos' : 'plus'
+  const valorSemOperacao = Math.abs(quantia)
   const li = document.createElement('li') //Criando um novo elemento HTML
 
   li.classList.add(CSSClass)
   li.innerHTML = `
-    ${transacao.name} 
+    ${name} 
     <span>${operacao} R$ ${valorSemOperacao}</span>
-    <button class="delete-btn" onClick="removeTransacao(${transacao.id})">
-    x
-    </button>
+    <button class="delete-btn" onClick="removeTransacao(${id})">x</button>
   `
  //transacaoUl.innerHTML = li ===> [object HTMLLIElement]
-    transacaoUl.prepend(li) 
+    transacaoUl.append(li) 
 }
 
 const pegaDespesas = transacaoQuantia => Math.abs(transacaoQuantia
-  .filter(value => value < 0)
-  .reduce((accumulator, value) => accumulator + value, 0))
-  .toFixed(2) 
-
-const atualizaValorSaldo = () => {
-  const transacaoQuantia = transacao
-    .map(transacao => transacao.quantia)
-  const total = transacaoQuantia
-    .reduce((accumulator, transacao) => accumulator + transacao, 0)
+    .filter(value => value < 0)
+    .reduce((accumulator, value) => accumulator + value, 0))
     .toFixed(2)
-  const receita = transacaoQuantia
+const pegaReceita = transacaoQuantia => transacaoQuantia
     .filter(value => value > 0)
     .reduce((accumulator, value) => accumulator + value, 0)
-    .toFixed(2)                     
+    .toFixed(2) 
+const pegaTotal = transacaoQuantia => transacaoQuantia
+    .reduce((accumulator, transacao) => accumulator + transacao, 0)
+    .toFixed(2)       
+
+const atualizaValorSaldo = () => {
+  const transacaoQuantia = transacao.map(({quantia}) => quantia)
+  const total = pegaTotal(transacaoQuantia)
+  const receita =  pegaReceita(transacaoQuantia)                   
   const despesas = pegaDespesas(transacaoQuantia)
     
     //Exibir saldo, receita e despesa total na tela
