@@ -1,15 +1,14 @@
 // shift + alt + seta para baixo: duplicar a linha
 
-const transacaoUl = document.querySelector('#transacoes')
-const exibindoReceita = document.querySelector('#dinheiro-mais')
-const exibindoDespesa = document.querySelector('#dinheiro-menos')  //Inserindo informações no DOM
-const exibindoTotal = document.querySelector('#balanco')
+const transacaoUl = document.querySelector('#transacoes')           //Recebendo a referência da ul
+const exibindoReceita = document.querySelector('#dinheiro-mais')    //Inserindo informações no DOM - Receita - 4
+const exibindoDespesa = document.querySelector('#dinheiro-menos')   //Inserindo informações no DOM - Despesa - 4
+const exibindoTotal = document.querySelector('#balanco')            //Inserindo informações no DOM - Total   - 4      
 
-const form = document.querySelector('#form')
-const nomeTransacaoEntrada = document.querySelector('#text')
-const valorTransacaoEntrada = document.querySelector('#quantia')
+const form = document.querySelector('#form')                        //Recebendo a referência do formulário - 5 
+const nomeTransacaoEntrada = document.querySelector('#text')        //Recebendo a referência do input - 6
+const valorTransacaoEntrada = document.querySelector('#quantia')    //Recebendo a referência do input - 6
 
-// console.log(form)
 //console.log({ exibindoReceita, exibindoDespesa, exibindoTotal  }) Testando como objeto
 
 /*
@@ -23,7 +22,7 @@ let transacao = [
 */
 
 
-//Armazenamento das Transações Realizadas
+//Armazenamento das Transações Realizadas para Aramzenamento no Local Storage - 9
 const localArmazenamentoTransacoes = JSON.parse(localStorage
     .getItem('transacao'))
 let transacao = localStorage
@@ -34,27 +33,28 @@ const removeTransacao = ID => {
   transacao = transacao.filter(transacao => 
     transacao.id !== ID)
     atualizarLocalArmazenamento()
-  inicio()
-  
+  inicio()  
 }
 
-//Função de adiciona as transações no DOM
+//Função de adiciona as transações no DOM - 1
 const addTransacoesNoDom = ({quantia, name, id}) => {
-  const operacao = quantia < 0 ? '-' : '+'
-  const CSSClass = quantia < 0 ? 'menos' : 'mais'
-  const valorSemOperacao = Math.abs(quantia)
-  const li = document.createElement('li') //Criando um novo elemento HTML
+  const operacao = quantia < 0 ? '-' : '+'             //Execução de ternário: Se true: string(-). Se false: string(+)
+  const CSSClass = quantia < 0 ? 'menos' : 'mais'      //Execução de ternário
+  const valorSemOperacao = Math.abs(quantia)           //Metodo abs retorna o valor absoluto do numero, mesmo se for positivo ou negativo
+  const li = document.createElement('li')              //Criando um novo elemento HTML, atraves do metodo do document
 
-  li.classList.add(CSSClass)
-  li.innerHTML = `
+  li.classList.add(CSSClass)                           //Adicionando a classe(CSSClass) na li  
+  li.innerHTML = `                                          
     ${name} 
     <span>${operacao} R$ ${valorSemOperacao}</span>
     <button class="delete-btn" onClick="removeTransacao(${id})">x</button>
-  `
- //transacaoUl.innerHTML = li ===> [object HTMLLIElement]
-    transacaoUl.append(li) 
+  `                                                     //String (Template String ) é convertida para HTML no momento da inserção
+
+ //transacaoUl.innerHTML = li ===> [object HTMLLIElement] Retorna esse erro, porque ela não é String e sim objeto do JS
+  transacaoUl.append(li)                               //Recebe o elemento como último filho desse elemento ul que ele for encadeado
 }
 
+//Funções para Refatoração da Função atualizaValorSaldo - 3
 const pegaDespesas = transacaoQuantia => Math.abs(transacaoQuantia
     .filter(value => value < 0)
     .reduce((accumulator, value) => accumulator + value, 0))
@@ -67,13 +67,14 @@ const pegaTotal = transacaoQuantia => transacaoQuantia
     .reduce((accumulator, transacao) => accumulator + transacao, 0)
     .toFixed(2)       
 
+//Função que atualiza o valor das transações na tela (Saldo, Receitas e Despesas).  - 3
 const atualizaValorSaldo = () => {
-  const transacaoQuantia = transacao.map(({quantia}) => quantia)
+  const transacaoQuantia = transacao.map(({quantia}) => quantia)               //os valores são aramzenados em um array
   const total = pegaTotal(transacaoQuantia)
   const receita =  pegaReceita(transacaoQuantia)                   
   const despesas = pegaDespesas(transacaoQuantia)
     
-    //Exibir saldo, receita e despesa total na tela
+    //Exibindo na tela saldo, receita e despesa
     exibindoTotal.textContent = `R$ ${total}`
     exibindoReceita.textContent = `R$ ${receita}`
     exibindoDespesa.textContent = `R$ ${despesas}`
@@ -81,53 +82,53 @@ const atualizaValorSaldo = () => {
   //console.log(despesas)
 }
 
-/* Função que executa o preenchimento das informações do estado da aplicação, quando a pagina for carregada. 
+/* Função que executa o preenchimento das informações do estado da aplicação, quando a pagina for carregada. - 2 
 Add as transações no DOM. 
 */
 const inicio = () => {
-  transacaoUl.innerHTML = ''
+  transacaoUl.innerHTML = ''                            //Limpando a ul, para evitar duplicação nas transações
   transacao.forEach(addTransacoesNoDom)
   atualizaValorSaldo()
 }
 
 inicio()
 
-//Função para adicionar Transação no Local Storage
+//Função para adicionar Transação no Local Storage - 10
 const atualizarLocalArmazenamento = () =>  {
-  localStorage.setItem('transacao', JSON.stringify(transacao));
+  localStorage.setItem('transacao', JSON.stringify(transacao));           //Salvar a informação no LocalStorage [array de objetos - formato de String]
 }
 
-//Gerando os ids automaticamente de forma aleatoria
-const geradorID = () => Math.round(Math.random() * 1000)
+//Gerando os ids automaticamente de forma aleatoria - 8
+const geradorID = () => Math.round(Math.random() * 1000)                  //Geração aleatoria de IDs de 0 a 1000 
 
 const adicionarTransacaoArray = (transacaoNome, transacaoQuantia) => {
   transacao.push({ 
     id: geradorID(), 
     name: transacaoNome, 
-    quantia: Number(transacaoQuantia) 
+    quantia: Number(transacaoQuantia)                                     //Invocando a função Number, para retorno numerico 
   })
 }
 
-//Limpeza dos Inputs na Função
+// Função de Limpeza dos Inputs - 8
 const limparInputs = () => {
   nomeTransacaoEntrada.value = ''
   valorTransacaoEntrada.value = ''
 }
 
-//Escutando os eventos - Função que faz o envio do formulário
+//Escutando os eventos - Função que faz o envio do formulário - 6
 const enviarFormulario =  event => {
   event.preventDefault()
-
-  const transacaoNome = nomeTransacaoEntrada.value.trim()
-  const transacaoQuantia = valorTransacaoEntrada.value.trim()
+  //Refatoração:
+  const transacaoNome = nomeTransacaoEntrada.value.trim()                  //Armazenando nome da transação - 7
+  const transacaoQuantia = valorTransacaoEntrada.value.trim()              //Armazenando valor da transação - 7
   const entradaVazia = transacaoNome === '' || transacaoQuantia === ''
 
-  //Caso um dos inputs não estejam preenchidos será exibido uma mensagem
+  //Caso um dos inputs não estejam preenchidos será exibido uma mensagem - 7
   if (entradaVazia) {
-    alert('Por favor, preencha tanto o nome quanto o valor da transação')
+    alert('Por favor, preencha tanto o nome quanto o valor da transação.')
     return
   }
-
+  //Funções sendo invocadas
   adicionarTransacaoArray(transacaoNome, transacaoQuantia)
   inicio()
   atualizarLocalArmazenamento()
@@ -135,6 +136,7 @@ const enviarFormulario =  event => {
 
 }
 
+//Função de envio para o Formulario - 6
 form.addEventListener('submit', enviarFormulario)
 
 
