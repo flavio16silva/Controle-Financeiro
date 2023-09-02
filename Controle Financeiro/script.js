@@ -1,7 +1,7 @@
 // shift + alt + seta para baixo: duplicar a linha
 
 const transacaoUl = document.querySelector('#transacoes')
-const exibindoReceita = document.querySelector('#dinheiro-plus')
+const exibindoReceita = document.querySelector('#dinheiro-mais')
 const exibindoDespesa = document.querySelector('#dinheiro-menos')  //Inserindo informações no DOM
 const exibindoTotal = document.querySelector('#balanco')
 
@@ -9,16 +9,19 @@ const form = document.querySelector('#form')
 const nomeTransacaoEntrada = document.querySelector('#text')
 const valorTransacaoEntrada = document.querySelector('#quantia')
 
-
 // console.log(form)
 //console.log({ exibindoReceita, exibindoDespesa, exibindoTotal  }) Testando como objeto
 
-// let transacao = [
-//   { id: 1, name: 'Bolo de brigadeiro', quantia: -20 },
-//   { id: 2, name: 'Salário', quantia: 300 },
-//   { id: 3, name: 'Torta de frango', quantia: -10 },
-//   { id: 4, name: 'Violão', quantia: 150 }
-// ]
+/*
+Objetos dentro de um Array
+let transacao = [ 
+{ id: 1, name: 'Bolo de brigadeiro', quantia: -20 },
+{ id: 2, name: 'Salário', quantia: 300 },
+{ id: 3, name: 'Torta de frango', quantia: -10 },
+{ id: 4, name: 'Violão', quantia: 150 }
+]
+*/
+
 
 //Armazenamento das Transações Realizadas
 const localArmazenamentoTransacoes = JSON.parse(localStorage
@@ -35,9 +38,10 @@ const removeTransacao = ID => {
   
 }
 
+//Função de adiciona as transações no DOM
 const addTransacoesNoDom = ({quantia, name, id}) => {
   const operacao = quantia < 0 ? '-' : '+'
-  const CSSClass = quantia < 0 ? 'menos' : 'plus'
+  const CSSClass = quantia < 0 ? 'menos' : 'mais'
   const valorSemOperacao = Math.abs(quantia)
   const li = document.createElement('li') //Criando um novo elemento HTML
 
