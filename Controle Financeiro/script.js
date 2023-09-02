@@ -13,17 +13,26 @@ const valorTransacaoEntrada = document.querySelector('#quantia')
 // console.log(form)
 //console.log({ exibindoReceita, exibindoDespesa, exibindoTotal  }) Testando como objeto
 
-let realTransacao = [
-  { id: 1, name: 'Bolo de Brigadeiro', quantia: -20 },
-  { id: 2, name: 'Salário', quantia: 300 },
-  { id: 3, name: 'Torta de Frango', quantia: -10 },
-  { id: 4, name: 'Violão', quantia: 150 }
-]
+// let transacao = [
+//   { id: 1, name: 'Bolo de brigadeiro', quantia: -20 },
+//   { id: 2, name: 'Salário', quantia: 300 },
+//   { id: 3, name: 'Torta de frango', quantia: -10 },
+//   { id: 4, name: 'Violão', quantia: 150 }
+// ]
 
-//Remoção de Transações
+//Armazenamento das Transações Realizadas
+const localArmazenamentoTransacoes = JSON.parse(localStorage
+    .getItem('transacao'))
+let transacao = localStorage
+    .getItem('transacao') !== null ? localArmazenamentoTransacoes : []
+
+//Remoção de Transações, que tem o ID diferente da transação que foi clicado. 
 const removeTransacao = ID => {
-  realTransacao = realTransacao.filter(transacao => transacao.id !== ID)
-  console.log(realTransacao)
+  transacao = transacao.filter(transacao => 
+    transacao.id !== ID)
+    atualizarLocalArmazenamento()
+  inicio()
+  
 }
 
 const addTransacoesNoDom = transacao => {
@@ -36,7 +45,7 @@ const addTransacoesNoDom = transacao => {
   li.innerHTML = `
     ${transacao.name} 
     <span>${operacao} R$ ${valorSemOperacao}</span>
-    <button class="delete-btn" on-Click="removerTransacao(${transacao.id})">
+    <button class="delete-btn" onClick="removeTransacao(${transacao.id})">
     x
     </button>
   `
@@ -46,7 +55,7 @@ const addTransacoesNoDom = transacao => {
 }
 
 const atualizaValorSaldo = () => {
-  const transacaoQuantia = realTransacao
+  const transacaoQuantia = transacao
     .map(transacao => transacao.quantia)
   const total = transacaoQuantia
     .reduce((accumulator, transacao) => accumulator + transacao, 0)
@@ -54,7 +63,7 @@ const atualizaValorSaldo = () => {
   const receita = transacaoQuantia
     .filter(value => value > 0)
     .reduce((accumulator, value) => accumulator + value, 0)
-    .toFixed(2)
+    .toFixed(2)                     
   const despesas = Math.abs(transacaoQuantia
     .filter(value => value < 0)
     .reduce((accumulator, value) => accumulator + value, 0))
@@ -72,21 +81,35 @@ const atualizaValorSaldo = () => {
 
 
 
-// Função que executa o preenchimento das informações do estado da aplicação, quando a pagina for carregada. Add as transações no DOM. 
+/* Função que executa o preenchimento das informações do estado da aplicação, quando a pagina for carregada. 
+Add as transações no DOM. 
+*/
 const inicio = () => {
   transacaoUl.innerHTML = ''
-  realTransacao.forEach(addTransacoesNoDom)
+  transacao.forEach(addTransacoesNoDom)
   atualizaValorSaldo()
 }
 
 inicio()
 
+//Função para adicionar Transação no Local Storage
+const atualizarLocalArmazenamento = () =>  {
+  localStorage.setItem('transacao', JSON.stringify(transacao));
+}
 
 //Gerando os ids automaticamente de forma aleatoria
 const geradorID = () => Math.round(Math.random() * 1000)
 
-//Escutando os eventos
-form.addEventListener('submit', event => {
+const adicionarTransacaoArray = (transacaoNome, transacaoQuantia) => {
+  transacao.push({ 
+    id: geradorID(), 
+    name: transacaoNome, 
+    quantia: Number(transacaoQuantia) 
+  })
+}
+
+//Escutando os eventos - Função que faz o envio do formulário
+const enviarFormulario =  event => {
   event.preventDefault()
 
   const transacaoNome = nomeTransacaoEntrada.value.trim()
@@ -98,25 +121,22 @@ form.addEventListener('submit', event => {
     return
   }
 
-  const transacao = { 
-    id: geradorID(), 
-    name: transacaoNome, 
-    quantia: Number(transacaoQuantia) 
-  }
-  //console.log(transacao)
-
-  realTransacao.push(transacao)
+  adicionarTransacaoArray(transacaoNome, transacaoQuantia)
   inicio()
+  atualizarLocalArmazenamento()
 
   //Limpando os inputs do nome e valor da transação
   nomeTransacaoEntrada.value = ''
   valorTransacaoEntrada.value = ''
-})
+
+}
+
+form.addEventListener('submit', enviarFormulario)
 
 
 
-// addTransacoesNoDom(realTransacao[2])
-// addTransacoesNoDom(realTransacao[1])
+// addTransacoesNoDom(transacao[2])
+// addTransacoesNoDom(transacao[1])
 
 
 
@@ -131,3 +151,5 @@ form.addEventListener('submit', event => {
 
 
 //ClaudiaAmora1820
+
+//sodexo: Claudi@Amor@1820
