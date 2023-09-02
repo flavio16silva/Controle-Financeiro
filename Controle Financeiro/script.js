@@ -50,9 +50,13 @@ const addTransacoesNoDom = transacao => {
     </button>
   `
  //transacaoUl.innerHTML = li ===> [object HTMLLIElement]
-    transacaoUl.prepend(li)
- 
+    transacaoUl.prepend(li) 
 }
+
+const pegaDespesas = transacaoQuantia => Math.abs(transacaoQuantia
+  .filter(value => value < 0)
+  .reduce((accumulator, value) => accumulator + value, 0))
+  .toFixed(2) 
 
 const atualizaValorSaldo = () => {
   const transacaoQuantia = transacao
@@ -64,10 +68,7 @@ const atualizaValorSaldo = () => {
     .filter(value => value > 0)
     .reduce((accumulator, value) => accumulator + value, 0)
     .toFixed(2)                     
-  const despesas = Math.abs(transacaoQuantia
-    .filter(value => value < 0)
-    .reduce((accumulator, value) => accumulator + value, 0))
-    .toFixed(2) 
+  const despesas = pegaDespesas(transacaoQuantia)
     
     //Exibir saldo, receita e despesa total na tela
     exibindoTotal.textContent = `R$ ${total}`
@@ -76,10 +77,6 @@ const atualizaValorSaldo = () => {
 
   //console.log(despesas)
 }
-
-
-
-
 
 /* Função que executa o preenchimento das informações do estado da aplicação, quando a pagina for carregada. 
 Add as transações no DOM. 
@@ -108,15 +105,22 @@ const adicionarTransacaoArray = (transacaoNome, transacaoQuantia) => {
   })
 }
 
+//Limpeza dos Inputs na Função
+const limparInputs = () => {
+  nomeTransacaoEntrada.value = ''
+  valorTransacaoEntrada.value = ''
+}
+
 //Escutando os eventos - Função que faz o envio do formulário
 const enviarFormulario =  event => {
   event.preventDefault()
 
   const transacaoNome = nomeTransacaoEntrada.value.trim()
   const transacaoQuantia = valorTransacaoEntrada.value.trim()
+  const entradaVazia = transacaoNome === '' || transacaoQuantia === ''
 
   //Caso um dos inputs não estejam preenchidos será exibido uma mensagem
-  if (transacaoNome === '' || transacaoQuantia === '') {
+  if (entradaVazia) {
     alert('Por favor, preencha tanto o nome quanto o valor da transação')
     return
   }
@@ -124,10 +128,7 @@ const enviarFormulario =  event => {
   adicionarTransacaoArray(transacaoNome, transacaoQuantia)
   inicio()
   atualizarLocalArmazenamento()
-
-  //Limpando os inputs do nome e valor da transação
-  nomeTransacaoEntrada.value = ''
-  valorTransacaoEntrada.value = ''
+  limparInputs()
 
 }
 
