@@ -36,13 +36,6 @@ h1 {
   color: #2e75cc;
 }
 
-/* h2 {
-  text-transform: uppercase;
-  font-size: 1em;
-  margin: 10px 0 3px;
-
-} */
-
 /* Transações, Adicionar Transação  */
 h3 {
   border-bottom: 1px solid #bbb;
@@ -56,6 +49,7 @@ h4 {
   text-transform: uppercase;
 }
 
+/* Container das Receitas e Despesas */
 .containerdois {
   background-color: #fff;
   box-shadow: var(--box-shadow);
@@ -65,25 +59,30 @@ h4 {
   margin: 20px 0;
 }
 
+/* Container das Receitas e Despesas */
 .containerdois > article {
   flex: 1;
   text-align: center;
 }
 
+/* Container das Receitas e Despesas */
 .containerdois > article:first-of-type {
   border-right: 1px solid #dedede;
 }
 
+/* Receitas e Despesas */
 .dinheiro {
   font-size: 20px;
   letter-spacing: 1px;
   margin: 5px 0;
 }
 
-.dinheiro-plus {
+/* Transações - Receita - cor */
+.dinheiro-mais {
   color: #2ecc71;
 }
 
+/* Transações - Despesas - cor */
 .dinheiro-menos {
   color: #c0392b;
 }
@@ -124,12 +123,14 @@ input[type='number'] {
   outline: 0;
 }
 
+/* Listas - ul */
 .transacoes {
   list-style-type: none;
   padding: 0;
   margin-bottom: 40px;
 }
 
+/* Transações li */
 .transacoes li {
   background-color: #fff;
   box-shadow: var(--box-shadow);
@@ -141,7 +142,7 @@ input[type='number'] {
   margin: 10px 0;
 }
 
-.transacoes li.plus {
+.transacoes li.mais {
   border-right: 5px solid #2ecc71;
  
 }
@@ -150,6 +151,7 @@ input[type='number'] {
   border-right: 5px solid #c0392b;
 }
 
+/* Botão vermelho de DELETE */
 .delete-btn {
   cursor: pointer;
   background-color: #e74c3c;
