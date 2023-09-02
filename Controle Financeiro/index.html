@@ -8,12 +8,13 @@
 </head>
 <body>
   <h2>Controle Financeiro</h2>
-
+  <!-- Container Geral -->
   <main class="container">
       <h4>Saldo Atual</h4>
-
+      <!-- Retorno do Saldo Total -->
       <h1 id="balanco" class="balanco">R$ 0.00</h1>
 
+      <!-- Retorno das Receitas e Despesas -->
       <section class="containerdois">
             <article>
                 <h4>Receitas</h4>
@@ -27,7 +28,7 @@
       </section>
 
     <h3>Transações</h3>
-
+        <!-- Lista das Transações Adicionadas -->
       <ul id="transacoes" class="transacoes"> 
            <!-- <li class="menos">
                 Salário <span>-$400</span><button class="delete-btn">x</button>
@@ -36,7 +37,7 @@
       </ul>
 
     <h3>Adicionar Transação</h3>
-
+        <!-- Formulario de inserção das Transações -->
         <form id="form">
               <article class="form-controle">
                   <label for="text">Nome</label>
@@ -49,12 +50,12 @@
                   </label>
                   <input type="number" id="quantia" placeholder="Valor da Transação"/>
               </article>
-
+              <!-- Botão de adição das Transações -->
               <button class="btn">Adicionar</button>
           
         </form>
   </main>
-
+  <!-- Script dp JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
