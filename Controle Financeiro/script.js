@@ -40,7 +40,7 @@ const removeTransacao = ID => {
 const addTransacoesNoDom = ({quantia, name, id}) => {
   const operacao = quantia < 0 ? '-' : '+'             //Execução de ternário: Se true: string(-). Se false: string(+)
   const CSSClass = quantia < 0 ? 'menos' : 'mais'      //Execução de ternário
-  const valorSemOperacao = Math.abs(quantia)           //Metodo abs retorna o valor absoluto do numero, mesmo se for positivo ou negativo
+  const valorSemOperacao = Math.abs(quantia).toFixed(2)//Metodo abs retorna o valor absoluto do numero, mesmo se for positivo ou negativo
   const li = document.createElement('li')              //Criando um novo elemento HTML, atraves do metodo do document
 
   li.classList.add(CSSClass)                           //Adicionando a classe(CSSClass) na li  
@@ -49,6 +49,8 @@ const addTransacoesNoDom = ({quantia, name, id}) => {
     <span>${operacao} R$ ${valorSemOperacao}</span>
     <button class="delete-btn" onClick="removeTransacao(${id})">x</button>
   `                                                     //String (Template String ) é convertida para HTML no momento da inserção
+
+
 
  //transacaoUl.innerHTML = li ===> [object HTMLLIElement] Retorna esse erro, porque ela não é String e sim objeto do JS
   transacaoUl.append(li)                               //Recebe o elemento como último filho desse elemento ul que ele for encadeado
@@ -69,7 +71,7 @@ const pegaTotal = transacaoQuantia => transacaoQuantia
 
 //Função que atualiza o valor das transações na tela (Saldo, Receitas e Despesas).  - 3
 const atualizaValorSaldo = () => {
-  const transacaoQuantia = transacao.map(({quantia}) => quantia)               //os valores são aramzenados em um array
+  const transacaoQuantia = transacao.map(({quantia}) => quantia)               //os valores são armazenados em um array
   const total = pegaTotal(transacaoQuantia)
   const receita =  pegaReceita(transacaoQuantia)                   
   const despesas = pegaDespesas(transacaoQuantia)
@@ -112,7 +114,7 @@ const adicionarTransacaoArray = (transacaoNome, transacaoQuantia) => {
 // Função de Limpeza dos Inputs - 8
 const limparInputs = () => {
   nomeTransacaoEntrada.value = ''
-  valorTransacaoEntrada.value = ''
+ valorTransacaoEntrada.value = ''
 }
 
 //Escutando os eventos - Função que faz o envio do formulário - 6
