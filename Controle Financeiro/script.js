@@ -22,7 +22,7 @@ let transacao = [
 */
 
 
-//Armazenamento das Transações Realizadas para Aramzenamento no Local Storage - 9
+//Armazenamento das Transações Realizadas para Armazenamento no Local Storage - 9
 const localArmazenamentoTransacoes = JSON.parse(localStorage
     .getItem('transacao'))
 let transacao = localStorage
