@@ -158,6 +158,3 @@ form.addEventListener('submit', enviarFormulario)
 
 
 
-//ClaudiaAmora1820
-
-//sodexo: Claudi@Amor@1820
